@@ -36,16 +36,29 @@ import java.util.Properties;*/
         JavaMailSender sender = createSender();
         //建立邮件消息,发送简单邮件和html邮件的区别
         MimeMessage mailMessage = sender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage);
+        // encoding设置为UTF-8防止乱码
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mailMessage, "UTF-8");
 
         try {
             // 设置收件人，寄件人
-            messageHelper.setFrom("joseph.wang@jjcargo.com");
-            messageHelper.setTo("joseph.wlf@qq.com");
+            messageHelper.setFrom("noreply@jjcargo.com");
+            messageHelper.setTo("emma.zhu@jjcargo.com");
 
             messageHelper.setSubject("测试Spring Mail(html)");
+
+            String text = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/></head><body>" +
+                    "尊敬的客户： 您好！<br/>" +
+                    "<br/>" +
+                    "感谢您使用【集吉运】网上订舱服务，贵司委托出运的货物：<br/>" +
+                    "订单号：JJC2016112900004<br/>" +
+                    "ETD: 2016-12-07<br/>" +
+                    "起运港：SHANGHAI<br/>" +
+                    "目的港：DURBAN<br/>" +
+                    "该订单现已发送“进仓通知“，请贵司登陆网址&nbsp;www.jjcargo.com&nbsp;完成下载，以免影响货物进仓，如有疑问请及时联系【集吉运】在线客服，或拨打400-900-7785，谢谢！<br/>" +
+                    "<br/>" +
+                    "感谢登陆【集吉运】，祝您工作愉快！<br/></body></html>";
             //true 表示启动HTML格式的邮件
-            messageHelper.setText("<html><head></head><body><h1>hello!!it's me</h1></body></html>", true);
+            messageHelper.setText(text, true);
 
             //发送邮件
             sender.send(mailMessage);
@@ -127,8 +140,8 @@ import java.util.Properties;*/
         sender.setHost("smtp.jjcargo.com");
         sender.setPort(465);
         sender.setJavaMailProperties(javaMailProperties);
-        sender.setUsername("joseph.wang@jjcargo.com");
-        sender.setPassword("W19901208lf");
+        sender.setUsername("noreply@jjcargo.com");
+        sender.setPassword("Lipin2016");
 
         return sender;
     }
